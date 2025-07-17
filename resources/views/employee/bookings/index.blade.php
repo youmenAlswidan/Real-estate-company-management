@@ -2,4 +2,5 @@
 
 @section('content')
 welcome as employee
+
 @endsection

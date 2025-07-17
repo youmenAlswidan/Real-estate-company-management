@@ -2,4 +2,6 @@
 
 @section('content')
 welcome as admin
+
+
 @endsection

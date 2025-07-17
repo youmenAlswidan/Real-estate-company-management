@@ -143,7 +143,19 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Logout</span>
+        
+       <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="nav-link d-flex align-items-center px-1 py-1 text-white w-100 border-0 bg-transparent">
+        <span class="nav-link-text">Logout</span>
+    </button>
+</form>
+
+
+
+
+
+           
           </a>
         </li>
        
