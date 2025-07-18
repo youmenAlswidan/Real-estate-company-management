@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PropertyTypeController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -13,10 +14,17 @@ Auth::routes();
 
 
 
-Route::middleware(['auth','role:admin'])->group( function() {
-    Route::get('/admin/properties', function(){
+Route::middleware(['auth','role:admin'])
+    ->prefix('admin')->name('admin.')
+    ->group( function() {
+
+    Route::get('properties', function(){
         return view('admin.properties.index');
-    })->name('admin.properties.index');
+    })->name('properties.index');
+
+    Route::resource('property_types',PropertyTypeController::class);
+
+    
 });
 
 
