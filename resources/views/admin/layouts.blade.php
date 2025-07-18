@@ -142,17 +142,11 @@
             </div>
         
        <form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit" class="nav-link d-flex align-items-center px-1 py-1 text-white w-100 border-0 bg-transparent">
-        <span class="nav-link-text">Logout</span>
-    </button>
-</form>
-
-
-
-
-
-           
+          @csrf
+          <button type="submit" class="nav-link d-flex align-items-center px-1 py-1 text-white w-100 border-0 bg-transparent">
+          <span class="nav-link-text">Logout</span>
+          </button>
+        </form>
           </a>
         </li>
       </ul>
@@ -163,10 +157,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Home</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <a class="navbar-brand" href="{{ route('admin.properties.index') }}">Home</a>
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -176,14 +168,14 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">Property Types</a>
+              <a class="nav-link" href=" {{ route('admin.property_types.index') }}">Property Types</a>
             </li>
 
           </ul>
 
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-            <button class="btn btn-outline-success" type="submit">Search</button>
+          <form class="d-flex align-items-center" role="search">
+            <input class="form-control form-control-sm me-2 my-0" type="search" placeholder="Search" aria-label="Search"/>
+            <button class="btn btn-outline-success mt-3" type="submit">Filter</button>
           </form>
         </div>
       </div>
