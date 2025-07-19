@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Role; 
 use App\Models\User;
 
 class RoleSeeder extends Seeder
@@ -21,14 +21,7 @@ class RoleSeeder extends Seeder
       
 
       // The customer and visitor roles use the API
-        $customer = Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'api']);
-        $visitor = Role::firstOrCreate(['name' => 'visitor', 'guard_name' => 'api']);
-
-        $user=User::find(3);
-        if($user) { $user->assignRole($customer); }
-
-        $user=User::find(4);
-        if($user) { $user->assignRole($visitor); }
-
+        Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'api']);
+        Role::firstOrCreate(['name' => 'visitor', 'guard_name' => 'api']);
     }
 }
