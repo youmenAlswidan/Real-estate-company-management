@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PropertyTypeController;
+use App\Http\Controllers\Admin\PropertyServiceController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -23,7 +24,7 @@ Route::middleware(['auth','role:admin'])
     })->name('properties.index');
 
     Route::resource('property_types',PropertyTypeController::class);
-
+    Route::resource('property_services',PropertyServiceController::class);
     
 });
 

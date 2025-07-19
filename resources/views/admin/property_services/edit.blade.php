@@ -3,19 +3,19 @@
 @section('content')
 
     <div class="container mt-4">
-        <h4>Edit Property Type Name</h4>
+        <h4>Edit Property Service Name</h4>
 
-        <form action="{{ route('admin.property_types.update', $property_type->id) }}" method="POST" class="mt-3">
+        <form action="{{ route('admin.property_services.update', $property_service->id) }}" method="POST" class="mt-3">
             @csrf
             @method('PUT')
 
             <div class="mb-3">
-                <label for="name" class="form-label">Property Type Name:</label>
+                <label for="name" class="form-label">Property Service Name:</label>
                 <input
                     type="text"
                     id="name"
                     name="name"
-                    value="{{ old('name', $property_type->name) }}"
+                    value="{{ old('name', $property_service->name) }}"
                     required
                     class="form-control"
                 />
@@ -25,7 +25,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Update</button>
-            <a href="{{ route('admin.property_types.index') }}" class="btn btn-secondary ms-2">Back to List</a>
+            <a href="{{ route('admin.property_services.index') }}" class="btn btn-secondary ms-2">Back to List</a>
         </form>
     </div>
 
