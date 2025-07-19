@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h3 class="mb-0">Property Type Details</h3>
+                <h4 class="mb-0">Property Type Details</h4>
             </div>
             <div class="card-body">
                 <p><strong>Property Type Name:</strong> {{ $property_type->name }}</p>

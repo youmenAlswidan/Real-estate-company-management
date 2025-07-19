@@ -12,13 +12,13 @@
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="{{ asset('assets/css/nucleo-icons.css') }} " rel="stylesheet" />
+  <link href="{{ asset('assets/css/nucleo-svg.css') }} " rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/349ee9c857.js" crossorigin="anonymous"></script>
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href=" {{ asset('assets/css/nucleo-svg.css') }} " rel="stylesheet" />
   <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/corporate-ui-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <link id="pagestyle" href="{{ asset('assets/css/corporate-ui-dashboard.css?v=1.0.0') }}" rel="stylesheet" />
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -157,14 +157,14 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('admin.properties.index') }}">Home</a>
+        <a class="navbar-brand" href="{{ route('admin.properties.index') }}">Properties</a>
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Additional Services</a>
+              <a class="nav-link active" aria-current="page" href="{{ route('admin.property_services.index') }}">Additional Services</a>
             </li>
 
             <li class="nav-item">
