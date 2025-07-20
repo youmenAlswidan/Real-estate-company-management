@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PropertyTypeController;
+use App\Http\Controllers\Admin\PropertyController;
+use Illuminate\Support\Facades\Auth;
+
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -16,16 +20,11 @@ Auth::routes();
 
 Route::middleware(['auth','role:admin'])
     ->prefix('admin')->name('admin.')
-    ->group( function() {
-
-    Route::get('properties', function(){
-        return view('admin.properties.index');
-    })->name('properties.index');
-
-    Route::resource('property_types',PropertyTypeController::class);
-
-    
-});
+    ->group(function () {
+        Route::resource('properties', PropertyController::class);
+        Route::resource('property_types', PropertyTypeController::class);
+  Route::delete('property-images/{id}', [PropertyController::class, 'destroyImage'])
+            ->name('properties.images.destroy');    });
 
 
 Route::middleware(['auth','role:employee'])->group( function() {
