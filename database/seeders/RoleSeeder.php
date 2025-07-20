@@ -14,12 +14,11 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-      //The roles admin and employee use the web
+        // The roles admin and employee use the web
         Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'employee', 'guard_name' => 'web']);
 
-
-      // The customer and visitor roles use the API
+        // The customer and visitor roles use the API
         Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'api']);
         Role::firstOrCreate(['name' => 'visitor', 'guard_name' => 'api']);
     }
