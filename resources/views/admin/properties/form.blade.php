@@ -57,6 +57,27 @@
 </div>
 
 <div class="mb-3">
+    @foreach ($services as $service)
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox"
+               name="services[]"
+               value="{{ $service->id }}"
+               id="service_{{ $service->id }}"
+
+               @if (old('services') && in_array($service->id, old('services')))
+                   checked
+               @elseif (isset($property) && $property->services->contains($service->id))
+                   checked
+               @endif
+        >
+        <label class="form-check-label" for="service_{{ $service->id }}">
+            {{ $service->name }}
+        </label>
+    </div>
+@endforeach
+</div>
+
+<div class="mb-3">
     <label for="images">Images (you can upload multiple):</label>
     <input type="file" name="images[]" multiple class="form-control">
     @error('images.*') <span class="text-danger">{{ $message }}</span> @enderror
