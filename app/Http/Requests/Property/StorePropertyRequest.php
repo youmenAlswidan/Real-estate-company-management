@@ -32,6 +32,8 @@ class StorePropertyRequest extends FormRequest
             'status' => 'required|in:available,sold,rented',
             'type_id' => 'required|exists:property_types,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'services' => 'nullable|array',
+            'services.*' => 'integer|exists:services,id',
         ];
     }
 }

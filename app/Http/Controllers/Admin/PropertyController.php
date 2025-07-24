@@ -6,22 +6,35 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Property\StorePropertyRequest;
 use App\Http\Requests\Property\UpdatePropertyRequest;
 use App\Models\Property;
+use App\Models\Service;
 use App\Models\PropertyType;
 use App\Models\Image;
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Storage;
 
 class PropertyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $properties = Property::with('type', 'images')->get();
-        return view('admin.properties.index', compact('properties'));
+        $types=PropertyType::all();
+        $statuses=Property::select('status')->distinct()->pluck('status');
+        $query=Property::query()->with(['type', 'images','services']);
+        if($request->filled('type_id')) {
+            $query->where('type_id',$request->type_id);
+        }
+        if($request->filled('status')) {
+            $query->where('status',$request->status);
+        }
+        $properties= $query->get();
+        return view('admin.properties.index', compact('properties','types','statuses'));
     }
 
     public function create()
     {
+        $services=Service::all();
         $types = PropertyType::all();
-        return view('admin.properties.create', compact('types'));
+        return view('admin.properties.create', compact('types','services'));
     }
 
     public function store(StorePropertyRequest $request)
@@ -29,6 +42,7 @@ class PropertyController extends Controller
         $validated = $request->validated();
 
         $property = Property::create($validated);
+        $property->services()->sync($request->input('services',[]));
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $imageFile) {
@@ -45,7 +59,7 @@ class PropertyController extends Controller
 
     public function show($id)
     {
-        $property = Property::with('type', 'images')->findOrFail($id);
+        $property = Property::with(['type', 'images','services'])->findOrFail($id);
         return view('admin.properties.show', compact('property'));
     }
 
@@ -53,7 +67,8 @@ class PropertyController extends Controller
     {
         $property = Property::with('images')->findOrFail($id);
         $types = PropertyType::all();
-        return view('admin.properties.edit', compact('property', 'types'));
+        $services=Service::all();
+        return view('admin.properties.edit', compact('property', 'types','services'));
     }
 
     public function update(UpdatePropertyRequest $request, $id)
@@ -62,6 +77,7 @@ class PropertyController extends Controller
 
         $property = Property::findOrFail($id);
         $property->update($validated);
+        $property->services()->sync($request->input('services',[]));
 
         if ($request->filled('images_to_delete')) {
             $imagesToDelete = explode(',', $request->input('images_to_delete'));

@@ -22,6 +22,7 @@
                 <th>Price</th>
                 <th>Status</th>
                 <th>Type</th>
+                <th>Services</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -41,6 +42,14 @@
                 <td>{{ $property->price }}</td>
                 <td>{{ ucfirst($property->status) }}</td>
                 <td>{{ $property->type->name ?? '-' }}</td>
+                <td>
+                    @if($property->services->count())
+                    @foreach($property->services as $service)
+                    <p>{{$service->name}}</p>
+                    @endforeach
+                    @else <p>No Additional Services</p>
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('admin.properties.show', $property->id) }}" class="btn btn-primary btn-sm mb-1">Show</a>
                     <a href="{{ route('admin.properties.edit', $property->id) }}" class="btn btn-info btn-sm mb-1">Edit</a>
