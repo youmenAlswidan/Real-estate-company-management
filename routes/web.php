@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware(['auth','role:admin'])
+Route::middleware(['auth','role:admin|employee'])
     ->prefix('admin')->name('admin.')
     ->group(function () {
 
@@ -41,8 +41,4 @@ Route::middleware(['auth','role:admin'])
         Route::resource('permissions', PermissionController::class);
 });
 
-Route::middleware(['auth','role:employee'])->group( function() {
-    Route::get('/employee/bookings', function(){
-        return view('employee.bookings.index');
-    })->name('employee.bookings.index');
-});
+

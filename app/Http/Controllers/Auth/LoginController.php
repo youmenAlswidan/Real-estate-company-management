@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+   // protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -47,7 +47,7 @@ class LoginController extends Controller
         }
 
         if ($user->hasRole('employee')) {
-            return redirect()->route('employee.bookings.index');
+            return redirect()->route('admin.properties.index');
         }
         return redirect('/');
         

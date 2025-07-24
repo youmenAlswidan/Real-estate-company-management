@@ -9,18 +9,20 @@
 @endif
 
 <form method="POST" action="{{ route('admin.property_services.store') }}">
-@csrf
-<div class="mt-2">
-    <label for="name">Property Service Name</label>
-    <input type="text" id="name" name="name" placeholder="Enter property Service" required class="form-control">
+    @csrf
+    <div class="mt-2">
+        <label for="name">Property Service Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter property Service" required class="form-control">
 
-    @error('name')
-        <span class="text-danger">{{ $message }}</span>
-    @enderror
-</div>
+        @error('name')
+            <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
 
-<button class="btn btn-success btn-sm mt-3" type="submit">Add</button>
+    <button class="btn btn-success btn-sm mt-3" type="submit">Add</button>
 </form>
+
+
 
 <div class="container">
 <div class="card mt-5">
@@ -44,12 +46,13 @@
                         <td>
                             <a href="{{ route('admin.property_services.show', $property_service->id) }}" class="btn btn-primary btn-sm mb-1">Show</a>
                             <a href="{{ route('admin.property_services.edit', $property_service->id) }}" class="btn btn-info btn-sm mb-1">Edit</a>
-
+                               
                             <form class="d-inline" method="POST" action="{{ route('admin.property_services.destroy', $property_service->id) }}" onsubmit="return confirm('Are you sure?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm mb-1" type="submit">Delete</button>
                             </form>
+                         
                         </td>
                     </tr>
                 @endforeach

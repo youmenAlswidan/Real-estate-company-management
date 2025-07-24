@@ -18,19 +18,16 @@ class PermissionSeeder extends Seeder
 
         
         $adminPermissions = [
-            'create_property_type',
-            'edit_property_type',
-            'delete_property_type',
-            'create_property',
-            'edit_property',
-            'delete_property',
-            'create_service',
-            'edit_service',
-            'delete_service',
-            'manage_users',
-            'manage_roles',
-            'manage_permissions',
-            'view_reports',
+        'manage_property_type',
+        'manage_property',
+        'manage_service',
+        'manage_user',
+        'manage_role',
+        'manage_permission',
+
+    // تقارير (عرض فقط)
+    'view_property_reports',
+    'view_booking_reports',
         ];
 
         
