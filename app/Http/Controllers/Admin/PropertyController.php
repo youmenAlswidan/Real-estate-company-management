@@ -9,14 +9,25 @@ use App\Models\Property;
 use App\Models\Service;
 use App\Models\PropertyType;
 use App\Models\Image;
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Storage;
 
 class PropertyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $properties = Property::with(['type', 'images','services'])->get();
-        return view('admin.properties.index', compact('properties'));
+        $types=PropertyType::all();
+        $statuses=Property::select('status')->distinct()->pluck('status');
+        $query=Property::query()->with(['type', 'images','services']);
+        if($request->filled('type_id')) {
+            $query->where('type_id',$request->type_id);
+        }
+        if($request->filled('status')) {
+            $query->where('status',$request->status);
+        }
+        $properties= $query->get();
+        return view('admin.properties.index', compact('properties','types','statuses'));
     }
 
     public function create()
