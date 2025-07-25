@@ -4,7 +4,7 @@
 
     <div class="container mt-4">
         <h4>Edit Property Type Name</h4>
-
+         
         <form action="{{ route('admin.property_types.update', $property_type->id) }}" method="POST" class="mt-3">
             @csrf
             @method('PUT')
@@ -27,6 +27,7 @@
             <button type="submit" class="btn btn-success">Update</button>
             <a href="{{ route('admin.property_types.index') }}" class="btn btn-secondary ms-2">Back to List</a>
         </form>
+        
     </div>
 
 @endsection

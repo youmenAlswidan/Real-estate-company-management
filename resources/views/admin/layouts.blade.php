@@ -11,6 +11,7 @@
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <!-- Nucleo Icons -->
   <link href="{{ asset('assets/css/nucleo-icons.css') }} " rel="stylesheet" />
   <link href="{{ asset('assets/css/nucleo-svg.css') }} " rel="stylesheet" />
@@ -25,6 +26,7 @@
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 bg-slate-900 fixed-start " id="sidenav-main">
     <div class="collapse navbar-collapse px-4  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
+        
         <li class="nav-item">
           <a class="nav-link  active" href="../pages/dashboard.html">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -41,6 +43,28 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+       
+<li class="nav-item">
+  <a class="nav-link" href="{{ route('admin.roles.index') }}">
+    <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
+      <i class="fas fa-user-shield text-white"></i>
+    </div>
+    <span class="nav-link-text ms-1">Roles</span>
+  </a>
+</li>
+
+
+<li class="nav-item">
+  <a class="nav-link" href="{{ route('admin.permissions.index') }}">
+    <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
+      <i class="fas fa-key text-white"></i>
+    </div>
+    <span class="nav-link-text ms-1">Permissions</span>
+  </a>
+</li>
+
+
+
         <li class="nav-item">
           <a class="nav-link  " href="">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -108,7 +132,7 @@
             </div>
             <span class="nav-link-text ms-1">Bookings</span>
           </a>
-        </li>
+        <!-- </li>
         <li class="nav-item">
           <a class="nav-link  " href="">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -125,7 +149,7 @@
             </div>
             <span class="nav-link-text ms-1">Profile</span>
           </a>
-        </li>
+        </li>  -->
 
         <li class="nav-item">
           <a class="nav-link" href="#">
@@ -150,66 +174,50 @@
           </a>
         </li>
       </ul>
+      
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('admin.properties.index') }}">Properties</a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+   
+    <a class="navbar-brand" href="{{ route('admin.properties.index') }}">Properties</a>
+   
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+       
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ route('admin.property_services.index') }}">Additional Services</a>
+        </li>
+       
+
+       
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.property_types.index') }}">Property Types</a>
+        </li>
         
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      </ul>
 
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{ route('admin.property_services.index') }}">Additional Services</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href=" {{ route('admin.property_types.index') }}">Property Types</a>
-            </li>
-
-          </ul>
-
-          @isset($types,$statuses)
-          <form class="d-flex align-items-center" role="search"
-            method="GET" action="{{ route('admin.properties.index') }}">
-
-            <select name="type_id" class="p-2 border rounded">
-              <option value="">Property Type</option>
-              @foreach ($types as $type)
-                  <option value="{{ $type->id }}" {{ request('type_id') == $type->id ? 'selected' : ''}}> {{ $type->name }} </option>
-              @endforeach
-            </select>
-
-            <select name="status" class="p-2 border rounded">
-              <option value="">Property Status</option>
-              @foreach ($statuses as $status)
-                  <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : ''}}> {{ $status }} </option>
-              @endforeach
-            </select>
-
+          <form class="d-flex align-items-center" role="search">
+            <input class="form-control form-control-sm me-2 my-0" type="search" placeholder="Search" aria-label="Search"/>
             <button class="btn btn-outline-success mt-3" type="submit">Filter</button>
           </form>
-          @endisset
         </div>
       </div>
     </nav>
 
-    @yield('content')
-  
- 
-  <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <script src="../assets/js/plugins/swiper-bundle.min.js" type="text/javascript"></script>
-  <script>
- 
-</body>
+@yield('content')
 
-</html>
+<!-- Core JS Files -->
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="../assets/js/plugins/chartjs.min.js"></script>
+<script src="../assets/js/plugins/swiper-bundle.min.js" type="text/javascript"></script>
