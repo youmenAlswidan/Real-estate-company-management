@@ -13,6 +13,13 @@
         <p><strong>Status:</strong> {{ ucfirst($property->status) }}</p>
         <p><strong>Type:</strong> {{ $property->type->name ?? '-' }}</p>
         <p><strong>Description:</strong> {{ $property->description ?? '-' }}</p>
+        @if($property->services->count())
+        <p><strong>Additional Services:</strong>
+            @foreach($property->services as $service)
+                {{$service->name}},
+                @endforeach
+                @else <p>There is no Additional Services</p>
+                @endif
         <p><strong>Created At:</strong> {{ $property->created_at->format('Y-m-d') }}</p>
 
         <h5>Images:</h5>

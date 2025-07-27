@@ -204,10 +204,27 @@
 
       </ul>
 
-      <form class="d-flex align-items-center" role="search">
-        <input class="form-control form-control-sm me-2 my-0" type="search" placeholder="Search" aria-label="Search"/>
+      @isset($types,$statuses)
+      <form class="d-flex align-items-center" role="search"
+        method="GET" action="{{ route('admin.properties.index') }}">
+
+        <select name="type_id" class="p-2 border rounded">
+          <option value="">Property Type</option>
+          @foreach ($types as $type)
+              <option value="{{ $type->id }}" {{ request('type_id') == $type->id ? 'selected' : ''}}> {{ $type->name }} </option>
+          @endforeach
+        </select>
+
+        <select name="status" class="p-2 border rounded">
+          <option value="">Property Status</option>
+          @foreach ($statuses as $status)
+              <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : ''}}> {{ $status }} </option>
+          @endforeach
+        </select>
+
         <button class="btn btn-outline-success mt-3" type="submit">Filter</button>
       </form>
+      @endisset
     </div>
   </div>
 </nav>
