@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\PropertyType;
 use App\Http\Requests\PropertyType\StorePropertyTypeRequest;
 use App\Http\Requests\PropertyType\UpdatePropertyTypeRequest;
-//use App\Traits\Admin\PropertyTypeTrait;
 use App\Services\Admin\PropertyTypeService;
 
 class PropertyTypeController extends Controller
@@ -15,15 +14,16 @@ class PropertyTypeController extends Controller
     protected $propertyTypeService;
 
     public function __construct(PropertyTypeService $propertyTypeService) {
-        $this->propertyTypeService=$propertyTypeService;
+        $this->propertyTypeService = $propertyTypeService;
     }
-      /**
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $property_types=$this->propertyTypeService->getAll();
-        return view('admin.property_types.index',compact('property_types'));
+        $property_types = $this->propertyTypeService->getAll();
+        return view('admin.property_types.index', compact('property_types'));
     }
 
     /**
@@ -31,8 +31,7 @@ class PropertyTypeController extends Controller
      */
     public function store(StorePropertyTypeRequest $request)
     {
-        $result=$this->propertyTypeService->store($request->validated());
-        return redirect()->route('admin.property_types.index')->with($result['status'] ? 'success' : 'error', $result['message']);
+        return $this->propertyTypeService->store($request->validated());
     }
 
     /**
@@ -40,8 +39,8 @@ class PropertyTypeController extends Controller
      */
     public function show(PropertyType $property_type)
     {
-        $property_type=$this->propertyTypeService->show($property_type);
-        return view('admin.property_types.show',compact('property_type'));
+        $property_type = $this->propertyTypeService->show($property_type);
+        return view('admin.property_types.show', compact('property_type'));
     }
 
     /**
@@ -49,16 +48,15 @@ class PropertyTypeController extends Controller
      */
     public function edit(PropertyType $property_type)
     {
-        return view('admin.property_types.edit',compact('property_type'));
+        return view('admin.property_types.edit', compact('property_type'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePropertyTypeRequest $request, PropertyType $property_type)
-    {           
-        $result=$this->propertyTypeService->update($property_type,$request->validated());
-        return redirect()->route('admin.property_types.index')->with($result['status'] ? 'success' : 'error', $result['message']);
+    {
+        return $this->propertyTypeService->update($property_type, $request->validated());
     }
 
     /**
@@ -66,7 +64,6 @@ class PropertyTypeController extends Controller
      */
     public function destroy(PropertyType $property_type)
     {
-        $result=$this->propertyTypeService->delete($property_type);
-        return redirect()->route('admin.property_types.index')->with($result['status'] ? 'success' : 'error', $result['message']);
+        return $this->propertyTypeService->delete($property_type);
     }
 }

@@ -1,4 +1,4 @@
-@extends('admin.layouts')
+@extends('layouts')
 
 @section('content')
     <h2>Edit Permissions for Role: {{ $role->name }}</h2>

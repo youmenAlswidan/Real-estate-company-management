@@ -3,20 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Http\Requests\PropertyService\StorePropertyServiceRequest;
 use App\Http\Requests\PropertyService\UpdatePropertyServiceRequest;
+use App\Services\Admin\PropertyServiceManager;
+use App\Traits\Admin\ResponseTrait;
 
 class PropertyServiceController extends Controller
 {
+    use ResponseTrait;
+
+    protected $serviceManager;
+
+    public function __construct(PropertyServiceManager $serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $property_services=Service::all();
-        return view('admin.property_services.index',compact('property_services'));
+        $property_services = $this->serviceManager->getAll();
+        return view('admin.property_services.index', compact('property_services'));
     }
 
     /**
@@ -24,8 +34,13 @@ class PropertyServiceController extends Controller
      */
     public function store(StorePropertyServiceRequest $request)
     {
-        Service::create($request->validated());
-        return redirect()->route('admin.property_services.index')->with('success','Property Service Added Successfully');
+        $result = $this->serviceManager->store($request->validated());
+
+        if ($result) {
+            return $this->successResponse('Property Service Added Successfully', 'admin.property_services.index');
+        }
+
+        return $this->errorResponse('Failed to Add Property Service', 'admin.property_services.index');
     }
 
     /**
@@ -33,7 +48,13 @@ class PropertyServiceController extends Controller
      */
     public function show(Service $property_service)
     {
-        return view('admin.property_services.show',compact('property_service'));
+        $service = $this->serviceManager->get($property_service);
+
+        if (!$service) {
+            return $this->errorResponse('Property Service not found', 'admin.property_services.index');
+        }
+
+        return view('admin.property_services.show', ['property_service' => $service]);
     }
 
     /**
@@ -41,7 +62,7 @@ class PropertyServiceController extends Controller
      */
     public function edit(Service $property_service)
     {
-        return view('admin.property_services.edit',compact('property_service'));
+        return view('admin.property_services.edit', compact('property_service'));
     }
 
     /**
@@ -49,8 +70,13 @@ class PropertyServiceController extends Controller
      */
     public function update(UpdatePropertyServiceRequest $request, Service $property_service)
     {
-        $property_service->update($request->validated());
-        return redirect()->route('admin.property_services.index')->with('success','Property Service Updated Successfully');
+        $result = $this->serviceManager->update($property_service, $request->validated());
+
+        if ($result) {
+            return $this->successResponse('Property Service Updated Successfully', 'admin.property_services.index');
+        }
+
+        return $this->errorResponse('Failed to Update Property Service', 'admin.property_services.index');
     }
 
     /**
@@ -58,7 +84,12 @@ class PropertyServiceController extends Controller
      */
     public function destroy(Service $property_service)
     {
-        $property_service->delete();
-        return redirect()->route('admin.property_services.index')->with('success','Property Service deleted Successfully');
+        $result = $this->serviceManager->destroy($property_service);
+
+        if ($result) {
+            return $this->successResponse('Property Service deleted Successfully', 'admin.property_services.index');
+        }
+
+        return $this->errorResponse('Failed to Delete Property Service', 'admin.property_services.index');
     }
 }

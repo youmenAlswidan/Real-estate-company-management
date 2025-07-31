@@ -47,7 +47,7 @@ class LoginController extends Controller
         }
 
         if ($user->hasRole('employee')) {
-            return redirect()->route('admin.properties.index');
+            return redirect()->route('employee.reservations.pending');
         }
         return redirect('/');
         

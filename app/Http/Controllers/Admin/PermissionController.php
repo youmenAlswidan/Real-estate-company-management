@@ -1,68 +1,37 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Traits\Admin\ResponseTrait;
+use App\Services\Admin\PermissionService;
 use Spatie\Permission\Models\Permission;
-use App\Http\Requests\Role_Permssion\StorePermissionRequest;
-use App\Http\Requests\Role_Permssion\UpdatePermissionRequest;
 
 class PermissionController extends Controller
 {
+    use ResponseTrait;
+
+    protected $permissionService;
+
+    public function __construct(PermissionService $permissionService)
+    {
+        $this->permissionService = $permissionService;
+    }
+
     public function index()
     {
-        $permissions = Permission::all();
+        $permissions = $this->permissionService->getAll();
         return view('admin.permissions.index', compact('permissions'));
     }
 
-    public function create()
+   /* public function show(Permission $permission)
     {
-        return view('admin.permissions.create');
-    }
+        $permissionData = $this->permissionService->get($permission);
 
-    public function store(StorePermissionRequest $request)
-{
-    $guardName = $this->detectGuardName($request->name);
-
-    Permission::create([
-        'name' => $request->name,
-        'guard_name' => $guardName,
-    ]);
-
-    return redirect()->route('admin.permissions.index')->with('success', 'Permission created successfully.');
-}
-
-    
-
-    public function edit(Permission $permission)
-    {
-        return view('admin.permissions.edit', compact('permission'));
-    }
-
-    
-public function update(UpdatePermissionRequest $request, Permission $permission)
-{
-    $guardName = $this->detectGuardName($request->name);
-
-    $permission->update([
-        'name' => $request->name,
-        'guard_name' => $guardName,
-    ]);
-
-    return redirect()->route('admin.permissions.index')->with('success', 'Permission updated successfully.');
-}
-
-    public function destroy(Permission $permission)
-    {
-        $permission->delete();
-        return redirect()->route('admin.permissions.index')->with('success', 'Permission deleted successfully.');
-    }
-
-    private function detectGuardName($name)
-    {
-        if (stripos($name, 'admin') !== false || stripos($name, 'employee') !== false) {
-            return 'web';
+        if (!$permissionData) {
+            return $this->errorResponse('Permission not found', 'admin.permissions.index');
         }
-        return 'api';
-    }
+
+        return view('admin.permissions.show', compact('permissionData'));
+    }*/
 }

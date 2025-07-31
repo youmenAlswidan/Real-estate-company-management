@@ -18,17 +18,46 @@ class PermissionSeeder extends Seeder
 
         
         $adminPermissions = [
-        'manage_property_type',
-        'manage_property',
-        'manage_service',
-        'manage_user',
-        'manage_role',
-        'manage_permission',
+         'permission.view',
 
-    // تقارير (عرض فقط)
-    'view_property_reports',
-    'view_booking_reports',
+    'property.view',
+    'property.create',
+    'property.edit',
+    'property.delete',
+    'property.show',
+    'property.image.delete',
+
+    'property_service.view',
+    'property_service.create',
+    'property_service.edit',
+    'property_service.delete',
+    'property_service.show',
+
+    'property_type.view',
+    'property_type.create',
+    'property_type.edit',
+    'property_type.delete',
+    'property_type.show',
+
+    'role.view',
+    'role.create',
+    'role.edit',
+    'role.delete',
+    'role.permissions.edit',
+    'role.permissions.update',
         ];
+         $employeePermissions = [
+            'employee.reservation.view',
+            'employee.reservation.update_status',
+        ];
+ $customerPermissions = [
+            'customer.reservation.view',
+            'customer.reservation.create',
+            'customer.reservation.show',
+            'customer.reservation.update',
+            'customer.reservation.delete',
+        ];
+
 
         
         foreach (array_merge($adminPermissions) as $permission) {
@@ -40,9 +69,27 @@ class PermissionSeeder extends Seeder
 
 
        
-         $admin = Role::where('name', 'admin')->where('guard_name', 'web')->first();
-        $admin->syncPermissions($adminPermissions);
-       
+            $webPermissions = array_merge($adminPermissions, $employeePermissions);
+        foreach ($webPermissions as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission,
+                'guard_name' => 'web',
+            ]);
+        }
+
+        /** إنشاء صلاحيات الكوستمر (guard: api) */
+        foreach ($customerPermissions as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission,
+                'guard_name' => 'api',
+            ]);
+        }
+
+        // ربط الصلاحيات بالأدوار
+        Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web'])->syncPermissions($adminPermissions);
+        Role::firstOrCreate(['name' => 'employee', 'guard_name' => 'web'])->syncPermissions($employeePermissions);
+        Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'api'])->syncPermissions($customerPermissions);
+    
     
 }
 }

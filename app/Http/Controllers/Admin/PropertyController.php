@@ -6,69 +6,73 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Property\StorePropertyRequest;
 use App\Http\Requests\Property\UpdatePropertyRequest;
 use App\Models\Property;
-use App\Models\Service;
-use App\Models\PropertyType;
 use App\Models\Image;
+use App\Models\PropertyType;
+use App\Models\Service;
+use App\Services\Admin\PropertyService;
+use App\Traits\Admin\ResponseTrait;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Storage;
 
 class PropertyController extends Controller
 {
+    use ResponseTrait;
+
+    protected $propertyService;
+
+    public function __construct(PropertyService $propertyService)
+    {
+        $this->propertyService = $propertyService;
+    }
+
     public function index(Request $request)
     {
-        $types=PropertyType::all();
-        $statuses=Property::select('status')->distinct()->pluck('status');
-        $query=Property::query()->with(['type', 'images','services']);
-        if($request->filled('type_id')) {
-            $query->where('type_id',$request->type_id);
-        }
-        if($request->filled('status')) {
-            $query->where('status',$request->status);
-        }
-        $properties= $query->get();
-        return view('admin.properties.index', compact('properties','types','statuses'));
+        $types = PropertyType::all();
+        $statuses = Property::select('status')->distinct()->pluck('status');
+
+        $filters = [
+            'type_id' => $request->input('type_id'),
+            'status' => $request->input('status'),
+        ];
+
+        $properties = $this->propertyService->getAll($filters);
+
+        return view('admin.properties.index', compact('properties', 'types', 'statuses'));
     }
 
     public function create()
     {
-        $services=Service::all();
+        $services = Service::all();
         $types = PropertyType::all();
-        return view('admin.properties.create', compact('types','services'));
+
+        return view('admin.properties.create', compact('types', 'services'));
     }
 
     public function store(StorePropertyRequest $request)
     {
         $validated = $request->validated();
 
-        $property = Property::create($validated);
-        $property->services()->sync($request->input('services',[]));
+        $services = $request->input('services', []);
+        $images = $request->file('images', []);
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $imageFile) {
-                $path = $imageFile->store('properties', 'public');
-                Image::create([
-                    'property_id' => $property->id,
-                    'image_path' => $path,
-                ]);
-            }
-        }
+        $this->propertyService->store($validated, $services, $images);
 
-        return redirect()->route('admin.properties.index')->with('success', 'Property added successfully.');
+        return $this->successResponse('Property added successfully.', 'admin.properties.index');
     }
 
     public function show($id)
     {
-        $property = Property::with(['type', 'images','services'])->findOrFail($id);
+        $property = $this->propertyService->findById($id);
+
         return view('admin.properties.show', compact('property'));
     }
 
     public function edit($id)
     {
-        $property = Property::with('images')->findOrFail($id);
+        $property = $this->propertyService->findById($id);
         $types = PropertyType::all();
-        $services=Service::all();
-        return view('admin.properties.edit', compact('property', 'types','services'));
+        $services = Service::all();
+
+        return view('admin.properties.edit', compact('property', 'types', 'services'));
     }
 
     public function update(UpdatePropertyRequest $request, $id)
@@ -76,66 +80,31 @@ class PropertyController extends Controller
         $validated = $request->validated();
 
         $property = Property::findOrFail($id);
-        $property->update($validated);
-        $property->services()->sync($request->input('services',[]));
 
-        if ($request->filled('images_to_delete')) {
-            $imagesToDelete = explode(',', $request->input('images_to_delete'));
-            foreach ($imagesToDelete as $imageId) {
-                $image = $property->images()->where('id', $imageId)->first();
-                if ($image) {
-                    Storage::disk('public')->delete($image->image_path);
-                    $image->delete();
-                }
-            }
-        }
+        $services = $request->input('services', []);
+        $imagesToDelete = $request->filled('images_to_delete') ? explode(',', $request->input('images_to_delete')) : [];
+        $replaceImages = $request->file('replace_images', []);
+        $newImages = $request->file('images', []);
 
+        $this->propertyService->update($property, $validated, $services, $imagesToDelete, $replaceImages, $newImages);
 
-        if ($request->hasFile('replace_images')) {
-            foreach ($request->file('replace_images') as $imageId => $newImageFile) {
-                $oldImage = Image::find($imageId);
-                if ($oldImage) {
-
-                    Storage::disk('public')->delete($oldImage->image_path);
-
-                    $path = $newImageFile->store('properties', 'public');
-                    $oldImage->update(['image_path' => $path]);
-                }
-            }
-        }
-
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $imageFile) {
-                $path = $imageFile->store('properties', 'public');
-                Image::create([
-                    'property_id' => $property->id,
-                    'image_path' => $path,
-                ]);
-            }
-        }
-
-        return redirect()->route('admin.properties.index')->with('success', 'Property updated successfully.');
+        return $this->successResponse('Property updated successfully.', 'admin.properties.index');
     }
 
     public function destroy($id)
     {
         $property = Property::findOrFail($id);
 
-        foreach ($property->images as $image) {
-            Storage::disk('public')->delete($image->image_path);
-            $image->delete();
-        }
+        $this->propertyService->delete($property);
 
-        $property->delete();
-
-        return redirect()->route('admin.properties.index')->with('success', 'Property deleted successfully.');
+        return $this->successResponse('Property deleted successfully.', 'admin.properties.index');
     }
 
     public function destroyImage($id)
     {
         $image = Image::findOrFail($id);
-        Storage::disk('public')->delete($image->image_path);
-        $image->delete();
+
+        $this->propertyService->deleteImage($image);
 
         return back()->with('success', 'Image deleted successfully.');
     }

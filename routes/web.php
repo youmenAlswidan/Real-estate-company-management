@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\PropertyServiceController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\employee\ReservationManagementController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -39,6 +40,15 @@ Route::middleware(['auth','role:admin|employee'])
 
         // Permissions
         Route::resource('permissions', PermissionController::class);
+         Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
+       
 });
 
+
+Route::middleware(['auth','role:employee'])
+    ->prefix('employee')->name('employee.')
+    ->group(function () {
+        Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
+        Route::patch('reservations/{reservation}/status', [ReservationManagementController::class, 'updateStatus'])->name('reservations.updateStatus'); // لاحظ هنا حذف كلمة employee.
+    });
 
