@@ -15,7 +15,6 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>#</th>
                 <th>Image</th>
                 <th>Name</th>
                 <th>Location</th>
@@ -23,13 +22,13 @@
                 <th>Status</th>
                 <th>Type</th>
                 <th>Services</th>
+                <th>Visiting Hours</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach($properties as $property)
             <tr>
-                <td>{{ $loop->iteration }}</td>
                 <td>
                     @if($property->images->first())
                         <img src="{{ asset('storage/' . $property->images->first()->image_path) }}" width="70" class="rounded border">
@@ -50,6 +49,7 @@
                     @else <p>No Additional Services</p>
                     @endif
                 </td>
+                <td>{{ $property->visiting_hours }}</td>
                 <td>
                     <a href="{{ route('admin.properties.show', $property->id) }}" class="btn btn-primary btn-sm mb-1">Show</a>
                     <a href="{{ route('admin.properties.edit', $property->id) }}" class="btn btn-info btn-sm mb-1">Edit</a>

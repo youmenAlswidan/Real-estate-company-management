@@ -34,6 +34,7 @@ class StorePropertyRequest extends FormRequest
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'services' => 'nullable|array',
             'services.*' => 'integer|exists:services,id',
+            'visiting_hours' => 'required|string',
         ];
     }
 }

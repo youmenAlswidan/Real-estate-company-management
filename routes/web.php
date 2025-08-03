@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PropertyServiceController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\employee\ReservationManagementController;
+use App\Http\Controllers\Admin\ReportController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -19,7 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware(['auth','role:admin|employee'])
+Route::middleware(['auth','role:admin'])
     ->prefix('admin')->name('admin.')
     ->group(function () {
 
@@ -41,6 +42,12 @@ Route::middleware(['auth','role:admin|employee'])
         // Permissions
         Route::resource('permissions', PermissionController::class);
          Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
+
+
+         //Reports
+         Route::resource('reports', ReportController::class);
+
+
        
 });
 
