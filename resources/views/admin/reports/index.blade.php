@@ -1,6 +1,8 @@
 @extends('layouts')
 
 @section('content')
+
+@can('reports.view')
 <div class="container py-4">
 
     <h3 class="mb-4 text-center text-primary">📊 Statistics on Properties & Reservations</h3>
@@ -94,6 +96,13 @@
     </div>
 
 </div>
+@else
+<div class="container py-5 text-center">
+    <h1 class="display-4 text-danger">ممنوع</h1>
+    <p class="lead">مو من صلاحيتك الدخول على هالصفحة.</p>
+    
+</div>
+@endcan
 
 <a href="{{ route('admin.properties.index') }}" class="btn btn-secondary mt-3">Back</a>
 

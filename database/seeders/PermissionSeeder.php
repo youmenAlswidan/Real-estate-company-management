@@ -19,6 +19,7 @@ class PermissionSeeder extends Seeder
         
         $adminPermissions = [
          'permission.view',
+         'reports.view',
 
     'property.view',
     'property.create',
