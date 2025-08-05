@@ -33,6 +33,7 @@ class UpdatePropertyRequest extends FormRequest
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'services' => 'sometimes|array',
             'services.*' => 'integer|exists:services,id',
+            'visiting_hours' => 'required|string',
         ];
     }
 }

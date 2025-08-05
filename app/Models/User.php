@@ -50,6 +50,11 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
+    /**
+    * Get all reservations made by the user.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
     public function reservations()
     {
         return $this->hasMany(Reservation::class);

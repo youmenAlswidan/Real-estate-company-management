@@ -8,12 +8,12 @@ use App\Models\Reservation;
 use App\Http\Resources\Customer\ReservationResource;
 use App\Http\Requests\Reservation\StoreReservationRequest;
 use App\Http\Requests\Reservation\UpdateReservationRequest;
-use App\Traits\Customer\ReservationTrait;
+use App\Traits\Customer\AuthTrait;
 use App\Services\Customer\ReservationService;
 
 class ReservationController extends Controller
 {
-    use ReservationTrait;
+    use AuthTrait;
     protected $reservation_service;
 
     public function __construct(ReservationService $reservation_service){
