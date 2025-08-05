@@ -14,13 +14,11 @@ class ReservationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        //return parent::toArray($request);
         return [
         'property' => [
             'name' => $this->property->name,
             'location' => $this->property->location,
             'status' => $this->property->status,
-            // 'type' => $this->property_types->name
         ],
         'date' => $this->date,
         'time' =>$this->time,

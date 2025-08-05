@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Services\Customer;
-use App\Traits\Customer\ReservationTrait;
+use App\Traits\Customer\AuthTrait;
 use App\Models\Reservation;
 use App\Http\Resources\Customer\ReservationResource;
 
 class ReservationService {
-    use ReservationTrait;
+    use AuthTrait;
     
     public function getAllReservation(){
         try {

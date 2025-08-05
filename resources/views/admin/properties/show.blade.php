@@ -20,6 +20,9 @@
                 @endforeach
                 @else <p>There is no Additional Services</p>
                 @endif
+        
+        <p><strong>Visiting Hours:</strong> {{ $property->visiting_hours ?? '-' }}</p>
+
         <p><strong>Created At:</strong> {{ $property->created_at->format('Y-m-d') }}</p>
 
         <h5>Images:</h5>

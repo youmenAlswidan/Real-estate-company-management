@@ -78,6 +78,12 @@
 </div>
 
 <div class="mb-3">
+    <label for="visiting_hours">Visiting hours:</label>
+    <input type="text" name="visiting_hours" value="{{ old('visiting_hours', $property->visiting_hours ?? '') }}" required class="form-control">
+    @error('visiting_hours') <span class="text-danger">{{ $message }}</span> @enderror
+</div>
+
+<div class="mb-3">
     <label for="images">Images (you can upload multiple):</label>
     <input type="file" name="images[]" multiple class="form-control">
     @error('images.*') <span class="text-danger">{{ $message }}</span> @enderror
