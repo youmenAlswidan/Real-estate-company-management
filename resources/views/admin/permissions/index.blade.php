@@ -1,26 +1,34 @@
 @extends('layouts')
 
 @section('content')
-    <h2>Permissions</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    @can('permission.view')
+        <h2>Permissions</h2>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Permission Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($permissions as $permission)
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $permission->name }}</td>
+                    <th>#</th>
+                    <th>Permission Name</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach($permissions as $permission)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $permission->name }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <div class="alert alert-danger">
+            You do not have the permission to view this page.
+        </div>
+    @endcan
+
 @endsection

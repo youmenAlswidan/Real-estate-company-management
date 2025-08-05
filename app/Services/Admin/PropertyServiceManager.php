@@ -14,7 +14,7 @@ class PropertyServiceManager
             return Service::all();
         } catch (Exception $e) {
             Log::error('Error fetching property services: ' . $e->getMessage());
-            return collect(); // ترجع مجموعة فاضية لتجنب الكراش
+            return collect(); 
         }
     }
 

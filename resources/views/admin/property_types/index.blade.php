@@ -9,11 +9,12 @@
     @endif
       
     @if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
     @endif
 
+    @can('property_type.create')
     <form method="POST" action="{{ route('admin.property_types.store') }}">
         @csrf
         <div class="mt-2">
@@ -27,7 +28,9 @@
 
         <button class="btn btn-success btn-sm mt-3" type="submit">Add</button>
     </form>
+    @endcan
     
+    @can('property_type.view')
     <div class="container">
         <div class="card mt-5">
             <div class="card-header">
@@ -48,15 +51,21 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $property_type->name }}</td>
                                 <td>
-                                    <a href="{{ route('admin.property_types.show', $property_type->id) }}" class="btn btn-primary btn-sm mb-1">Show</a>
-                                    <a href="{{ route('admin.property_types.edit', $property_type->id) }}" class="btn btn-info btn-sm mb-1">Edit</a>
+                                    @can('property_type.show')
+                                        <a href="{{ route('admin.property_types.show', $property_type->id) }}" class="btn btn-primary btn-sm mb-1">Show</a>
+                                    @endcan
+
+                                    @can('property_type.edit')
+                                        <a href="{{ route('admin.property_types.edit', $property_type->id) }}" class="btn btn-info btn-sm mb-1">Edit</a>
+                                    @endcan
                                         
-                                    <form class="d-inline" method="POST" action="{{ route('admin.property_types.destroy', $property_type->id) }}" onsubmit="return confirm('Are you sure?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm mb-1" type="submit">Delete</button>
-                                    </form>
-                                   
+                                    @can('property_type.delete')
+                                        <form class="d-inline" method="POST" action="{{ route('admin.property_types.destroy', $property_type->id) }}" onsubmit="return confirm('Are you sure?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm mb-1" type="submit">Delete</button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach
@@ -65,5 +74,8 @@
             </div>    
         </div>    
     </div>
+    @else
+        <p>You do not have permission to view property types.</p>
+    @endcan
 
 @endsection

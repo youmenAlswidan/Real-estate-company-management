@@ -44,7 +44,7 @@ class PermissionSeeder extends Seeder
     'role.edit',
     'role.delete',
     'role.permissions.edit',
-    'role.permissions.update',
+    
         ];
          $employeePermissions = [
             'employee.reservation.view',
@@ -59,17 +59,10 @@ class PermissionSeeder extends Seeder
         ];
 
 
-        
-        foreach (array_merge($adminPermissions) as $permission) {
-            Permission::firstOrCreate([
-                'name' => $permission,
-                'guard_name' => 'web'
-            ]);
-        }
+       // دمج صلاحيات الويب فقط مرة واحدة
+        $webPermissions = array_merge($adminPermissions, $employeePermissions);
 
-
-       
-            $webPermissions = array_merge($adminPermissions, $employeePermissions);
+        // إنشاء صلاحيات الـ web مرة واحدة
         foreach ($webPermissions as $permission) {
             Permission::firstOrCreate([
                 'name' => $permission,
@@ -77,7 +70,7 @@ class PermissionSeeder extends Seeder
             ]);
         }
 
-        /** إنشاء صلاحيات الكوستمر (guard: api) */
+        // إنشاء صلاحيات الـ api
         foreach ($customerPermissions as $permission) {
             Permission::firstOrCreate([
                 'name' => $permission,
@@ -89,7 +82,5 @@ class PermissionSeeder extends Seeder
         Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web'])->syncPermissions($adminPermissions);
         Role::firstOrCreate(['name' => 'employee', 'guard_name' => 'web'])->syncPermissions($employeePermissions);
         Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'api'])->syncPermissions($customerPermissions);
-    
-    
-}
+    }
 }

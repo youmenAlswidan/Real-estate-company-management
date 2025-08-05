@@ -28,7 +28,7 @@ class ReservationService
                 }
             );
 
-            return true;  // أو ترجع الـ reservation لو حابب
+            return true; 
         } catch (\Throwable $e) {
             // ممكن تسجل الخطأ لو حابب
             \Log::error('Error updating reservation status: ' . $e->getMessage());
