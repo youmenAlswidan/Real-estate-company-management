@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Customer;
+namespace App\Http\Controllers\API\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -22,13 +22,14 @@ class ReservationController extends Controller
 
     public function index()
     {
-        return $this->reservation_service->getAllReservation();        
+        return $this->reservation_service->getAllReservation();
     }
 
     public function store(StoreReservationRequest $request)
     {
         return $this->reservation_service->storeReservation($request->validated());
     }
+
 
     public function show($id)
     {
@@ -38,6 +39,7 @@ class ReservationController extends Controller
 
     public function update(UpdateReservationRequest $request, $id)
     {
+
        return $this->reservation_service->updateReservation($request->validated(), $id);
     }
 

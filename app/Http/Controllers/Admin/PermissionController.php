@@ -13,11 +13,25 @@ class PermissionController extends Controller
 
     protected $permissionService;
 
+    /**
+     * Inject the PermissionService into the controller.
+     *
+     * @param  \App\Services\Admin\PermissionService  $permissionService  The service responsible for permission-related operations.
+     */
     public function __construct(PermissionService $permissionService)
     {
         $this->permissionService = $permissionService;
     }
 
+    /**
+     * Display a listing of all permissions.
+     *
+     * This method:
+     * - Retrieves all permissions using the PermissionService.
+     * - Returns the view for displaying the permissions in the admin panel.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $permissions = $this->permissionService->getAll();
