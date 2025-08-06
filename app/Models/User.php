@@ -14,7 +14,11 @@ class User extends Authenticatable implements JWTSubject
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable,  HasRoles;
 
+<<<<<<< HEAD
     
+=======
+    protected $guard_name = ['api','web'];
+>>>>>>> ali_last
 
     /**
      * The attributes that are mass assignable.

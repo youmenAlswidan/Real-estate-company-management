@@ -26,7 +26,7 @@
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 bg-slate-900 fixed-start " id="sidenav-main">
     <div class="collapse navbar-collapse px-4  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
-        
+
         <li class="nav-item">
           <a class="nav-link  active" href="{{ route('admin.properties.index') }}">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -43,7 +43,7 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-       
+
 <li class="nav-item">
   <a class="nav-link" href="{{ route('admin.roles.index') }}">
     <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -66,7 +66,7 @@
 
 
         <li class="nav-item">
-          <a class="nav-link  " href="">
+          <a class="nav-link  " href="{{ route('admin.employees.index') }}">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
               <svg width="30px" height="30px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g id="table" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -146,7 +146,7 @@
                 </g>
               </svg>
             </div>
-        
+
        <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="nav-link d-flex align-items-center px-1 py-1 text-white w-100 border-0 bg-transparent">
@@ -156,7 +156,7 @@
           </a>
         </li>
       </ul>
-      
+
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -164,25 +164,25 @@
     <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-   
+
     <a class="navbar-brand" href="{{ route('admin.properties.index') }}">Properties</a>
-   
+
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-       
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ route('admin.property_services.index') }}">Additional Services</a>
         </li>
-       
 
-       
+
+
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.property_types.index') }}">Property Types</a>
         </li>
-        
+
 
       </ul>
 
