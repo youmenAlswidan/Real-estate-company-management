@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
 
     'models' => [
 
@@ -28,7 +28,7 @@ return [
         'role' => Spatie\Permission\Models\Role::class,
 
     ],
-     'guards' => ['web', 'api'],
+     'guard_name' => ['web', 'api'],
 
     'table_names' => [
 

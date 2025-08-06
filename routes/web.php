@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +40,8 @@ Route::middleware(['auth','role:admin|employee'])
 
         // Permissions
         Route::resource('permissions', PermissionController::class);
+
+        Route::resource('employees', EmployeeController::class);
 });
 
 

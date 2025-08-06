@@ -14,18 +14,19 @@ class EmployeeSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    { 
+    {
         // Create employee user if not exists, with hashed password
         $employee = User::firstOrCreate(
             ['email' => 'youmen@gmail.com'],
             [
                 'name' => 'youmen',
-                'password' => Hash::make('youmen1234567'), 
+                'password' => Hash::make('youmen1234567'),
             ]
         );
 
         // Assign the 'employee' role to the user
-        $employee->assignRole('employee');
-    
+        $role = Role::findByName('employee', 'web');
+        $employee->assignRole($role);
+
     }
 }
