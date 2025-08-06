@@ -29,6 +29,10 @@ class PermissionSeeder extends Seeder
         ];
          $employeePermissions = [
             'employee.reservation.view',
+            'employee.reservation.confirmed.view',
+            'employee.reservation.cancelled.view',
+            'reviews.view',
+
            
         ];
  

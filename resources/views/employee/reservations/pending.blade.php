@@ -3,7 +3,6 @@
 @section('content')
 <div class="container-fluid py-4">
 
-  @can('employee.reservation.view')
   <div class="card">
     <div class="card-header pb-0">
       <h6>Pending Reservations</h6>
@@ -40,7 +39,6 @@
                 @endif
               </td>
               <td>
-                @can('employee.reservation.update_status')
                 <form method="POST" action="{{ route('employee.reservations.updateStatus', $reservation->id) }}">
                   @csrf
                   @method('PATCH')
@@ -50,9 +48,6 @@
                     <option value="cancelled" {{ $reservation->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                   </select>
                 </form>
-                @else
-                <span>-</span>
-                @endcan
               </td>
             </tr>
             @empty
@@ -65,9 +60,6 @@
       </div>
     </div>
   </div>
-  @else
-    <p class="text-center text-danger mt-4">You do not have permission to view reservations.</p>
-  @endcan
 
 </div>
 @endsection

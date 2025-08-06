@@ -4,73 +4,83 @@ namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\StoreReviewRequest;
-use App\Http\Resources\Customer\ReviewResource;
-use App\Models\Property;
-use App\Models\Review;
+use App\Http\Requests\Customer\UpdateReviewRequest;
 use App\Services\Customer\ReviewService;
-use App\Traits\Customer\ApiResponseTrait;
-use Illuminate\Support\Facades\Auth;
+use App\Traits\Customer\AuthTrait;
 
-
+/**
+ * Handles customer review operations via API.
+ */
 class ReviewController extends Controller
 {
+    use AuthTrait;
 
-
-    use ApiResponseTrait;
-
+    // Service responsible for handling review business logic
     protected $reviewService;
 
+    /**
+     * Inject ReviewService into the controller.
+     *
+     * @param ReviewService $reviewService
+     */
     public function __construct(ReviewService $reviewService)
     {
         $this->reviewService = $reviewService;
     }
 
-  public function index($propertyId)
-{
+    /**
+     * Display a list of all reviews for the specified property.
+     *
+     * @param int $propertyId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index($propertyId)
+    {
+        return $this->reviewService->getAllReviews($propertyId);
+    }
 
-    $property = Property::find($propertyId);
-    $reviews = Review::where('property_id', $propertyId)->latest()->get();
-
-    return $this->successResponse(ReviewResource::collection($reviews), 'Property Reviews');
-}
-
-
-
+    /**
+     * Store a newly created review for a property.
+     *
+     * @param StoreReviewRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(StoreReviewRequest $request)
     {
-        $data = $request->validated();
-        $data['user_id'] = Auth::id();
-
-        $review = $this->reviewService->storeReview($data);
-        return $this->successResponse(new ReviewResource($review), 'Review created successfully', 201);
+        return $this->reviewService->storeReview($request->validated());
     }
 
-    public function show(Review $review)
-{
-
-    return $this->successResponse(new ReviewResource($review), 'Review details');
-}
-
-    public function update(StoreReviewRequest $request, Review $review)
+    /**
+     * Display the specified review.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
     {
-        if ($review->user_id != Auth::id()) {
-            return $this->errorResponse('Unauthorized', 403);
-        }
-
-        $data = $request->validated();
-        $review = $this->reviewService->updateReview($review, $data);
-
-        return $this->successResponse(new ReviewResource($review), 'Review updated successfully');
+        return $this->reviewService->showReview($id);
     }
 
-
-    public function destroy(Review $review)
+    /**
+     * Update the specified review.
+     *
+     * @param UpdateReviewRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(UpdateReviewRequest $request, $id)
     {
-        if ($review->user_id != Auth::id()) {
-            return $this->errorResponse('Unauthorized', 403);
-        }
+        return $this->reviewService->updateReview($request->validated(), $id);
+    }
 
-        $this->reviewService->deleteReview($review);
-        return $this->successResponse(null, 'Review deleted successfully');
+    /**
+     * Delete the specified review.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        return $this->reviewService->deleteReview($id);
     }
 }

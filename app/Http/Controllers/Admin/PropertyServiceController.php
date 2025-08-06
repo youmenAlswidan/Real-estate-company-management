@@ -15,13 +15,20 @@ class PropertyServiceController extends Controller
 
     protected $serviceManager;
 
+    /**
+     * Inject PropertyServiceManager service.
+     *
+     * @param PropertyServiceManager $serviceManager
+     */
     public function __construct(PropertyServiceManager $serviceManager)
     {
         $this->serviceManager = $serviceManager;
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all property services.
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -30,7 +37,10 @@ class PropertyServiceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created property service in storage.
+     *
+     * @param StorePropertyServiceRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StorePropertyServiceRequest $request)
     {
@@ -44,7 +54,10 @@ class PropertyServiceController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified property service.
+     *
+     * @param Service $property_service
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function show(Service $property_service)
     {
@@ -58,7 +71,10 @@ class PropertyServiceController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified property service.
+     *
+     * @param Service $property_service
+     * @return \Illuminate\View\View
      */
     public function edit(Service $property_service)
     {
@@ -66,7 +82,11 @@ class PropertyServiceController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified property service in storage.
+     *
+     * @param UpdatePropertyServiceRequest $request
+     * @param Service $property_service
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdatePropertyServiceRequest $request, Service $property_service)
     {
@@ -80,7 +100,10 @@ class PropertyServiceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified property service from storage.
+     *
+     * @param Service $property_service
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Service $property_service)
     {

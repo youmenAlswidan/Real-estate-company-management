@@ -62,18 +62,5 @@ class AuthService
         }
     }
 
-    public function myProfile()
-    {
-        try {
-            $user = auth('api')->user();
-
-            if (!$user) {
-                return $this->errorResponse('Unauthenticated', 401);
-            }
-
-            return $this->successResponse(new AuthResource($user, ''), 'My Profile');
-        } catch (\Throwable $e) {
-            return $this->errorResponse($e->getMessage());
-        }
-    }
+   
 }

@@ -12,6 +12,9 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\employee\ReservationManagementController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\employee\ReviewManagementController;
+
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -43,14 +46,14 @@ Route::middleware(['auth','role:admin'])
 
         // Permissions
         Route::resource('permissions', PermissionController::class);
-        Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
-
+       
 
          //Reports
         Route::resource('reports', ReportController::class);
-
+         //employees
         Route::resource('employees', EmployeeController::class);
-       Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
+        //customers
+        Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
 
 });
 
@@ -58,7 +61,13 @@ Route::middleware(['auth','role:admin'])
 Route::middleware(['auth','role:employee'])
     ->prefix('employee')->name('employee.')
     ->group(function () {
+        //reservations
         Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
-        Route::patch('reservations/{reservation}/status', [ReservationManagementController::class, 'updateStatus'])->name('reservations.updateStatus'); // لاحظ هنا حذف كلمة employee.
+        Route::get('reservations/confirmed', [ReservationManagementController::class, 'indexConfirmed'])->name('reservations.confirmed');
+        Route::get('reservations/cancelled', [ReservationManagementController::class, 'indexCancelled'])->name('reservations.cancelled'); 
+        Route::patch('reservations/{reservation}/status', [ReservationManagementController::class, 'updateStatus'])->name('reservations.updateStatus'); 
+        //reviews
+        Route::get('/reviews', [ReviewManagementController::class, 'index'])->name('reviews.index');
+
     });
 

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @can('permission.view')
+   
         <h2>Permissions</h2>
 
         @if(session('success'))
@@ -12,7 +12,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>ID</th>
                     <th>Permission Name</th>
                 </tr>
             </thead>
@@ -25,10 +25,6 @@
                 @endforeach
             </tbody>
         </table>
-    @else
-        <div class="alert alert-danger">
-            You do not have the permission to view this page.
-        </div>
-    @endcan
+    
 
 @endsection

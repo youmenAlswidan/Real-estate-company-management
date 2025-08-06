@@ -1,4 +1,4 @@
-@extends('layouts') {{-- عدل حسب تنسيق مشروعك --}}
+@extends('layouts') 
 
 @section('content')
 <div class="container mt-4">
@@ -6,7 +6,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>#</th>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Registered At</th>

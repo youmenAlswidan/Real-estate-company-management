@@ -7,6 +7,12 @@ use App\Http\Resources\Customer\ReservationResource;
 
 class ReservationService {
     use AuthTrait;
+     /**
+     * Get all reservations of the authenticated user with related property details,
+     * ordered by latest first.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     
     public function getAllReservation(){
         try {
@@ -16,6 +22,15 @@ class ReservationService {
             return $this->errorResponse($e->getMessage());
         }
     }
+
+      /**
+     * Store a new reservation for the authenticated user.
+     * Checks if the property is already booked at the given date and time.
+     * Sets status to 'pending' by default.
+     *
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function storeReservation(array $data){
         try{
@@ -38,6 +53,13 @@ class ReservationService {
             return $this->errorResponse($e->getMessage());
         }
     }
+    /**
+     * Show details of a single reservation by its ID, 
+     * only if it belongs to the authenticated user.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function showReservation($id)
     {
@@ -49,7 +71,17 @@ class ReservationService {
             return $this->errorResponse($e->getMessage());
         }
     }
-
+/**
+     * Update an existing reservation by ID for the authenticated user.
+     * - Cannot modify if reservation status is 'confirmed'.
+     * - If status is 'cancelled', only date and time can be changed (property_id must remain the same).
+     * - Checks if the new booking time is available.
+     * - Resets status to 'pending' after update.
+     *
+     * @param array $data
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function updateReservation(array $data , $id) {
     try {
@@ -84,7 +116,13 @@ class ReservationService {
     }
 }
 
-
+ /**
+     * Delete a reservation by ID only if its status is 'pending'.
+     * Only allows deletion of pending reservations for the authenticated user.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
      public function deleteReservation($id) {
         try {
             $reservation = auth()->user()->reservations()->findOrFail($id);

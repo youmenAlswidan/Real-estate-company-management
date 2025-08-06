@@ -9,13 +9,34 @@ use Illuminate\Http\JsonResponse;
 class PropertyService
 {
     use ApiResponseTrait;
+    
+    /**
+     * Get a paginated list of properties with the latest first.
+     *
+     * @return JsonResponse
+     */
 
-    public function list(): JsonResponse
+   public function list(): JsonResponse
     {
-        $properties = Property::latest()->paginate(10);
+        $query = Property::query();
+
+        // Apply filter if type_id exists in the request
+        if (request()->has('type_id')) {
+            $query->where('type_id', request()->type_id);
+        }
+
+        // Use the filtered query for pagination
+        $properties = $query->latest()->paginate(10);
+
         $resourceCollection = PropertyResource::collection($properties);
         return $this->successResponse($resourceCollection, 'Properties retrieved successfully.');
     }
+    /**
+     * Get the details of a single property.
+     *
+     * @param Property $property
+     * @return JsonResponse
+     */
 
     public function get(Property $property): JsonResponse
     {

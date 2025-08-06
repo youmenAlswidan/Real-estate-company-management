@@ -24,7 +24,8 @@ class PropertyResource extends JsonResource
                 'location'    =>$this->location,
                 'price'       =>$this->price,
                 'description' =>$this->description,
-                'status'      =>$this->status
+                'status'      =>$this->status,
+                'visiting_hours' =>$this->visiting_hours,
             ]
         ];
     }
