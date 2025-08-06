@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Role_Permssion;
+namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePermissionRequest extends FormRequest
+class EmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->user()->hasRole('admin');
     }
 
     /**
@@ -22,7 +22,9 @@ class StorePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'name' => 'required|unique:permissions,name',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $this->route('employee'),
+            'password' => 'nullable|string|min:8'
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\role_permssion;
+namespace App\Http\Requests\Role_Permssion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -20,7 +20,7 @@ class UpdatePermissionRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    { 
+    {
         $permissionId = $this->route('permission')->id ?? null;
 
         return [

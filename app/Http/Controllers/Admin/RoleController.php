@@ -16,22 +16,51 @@ class RoleController extends Controller
 
     protected $roleService;
 
+    /**
+     * Inject the RoleService into the controller.
+     *
+     * @param  \App\Services\Admin\0RoleService  $roleService  The service responsible for role-related operations.
+     */
     public function __construct(RoleService $roleService)
     {
         $this->roleService = $roleService;
     }
 
+    /**
+     * Display a listing of all roles.
+     *
+     * This method:
+     * - Retrieves all roles using the RoleService.
+     * - Returns the view for displaying the roles in the admin panel.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $roles = $this->roleService->getAll();
         return view('admin.roles.index', compact('roles'));
     }
 
+    /**
+     * Display the form for creating a new role.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         return view('admin.roles.create');
     }
 
+    /**
+     * Store a newly created role in storage.
+     *
+     * Determines the appropriate guard name based on the role name,
+     * then delegates the role creation to the RoleService.
+     * Returns a success or error response based on the outcome.
+     *
+     * @param  \App\Http\Requests\StoreRoleRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreRoleRequest $request)
     {
         $guardName = in_array($request->name, ['admin', 'employee']) ? 'web' : 'api';
@@ -46,11 +75,29 @@ class RoleController extends Controller
             : $this->errorResponse('Failed to create role.', 'admin.roles.index');
     }
 
+    /**
+     * Show the form for editing the specified role.
+     *
+     * @param  \Spatie\Permission\Models\Role  $role
+     * @return \Illuminate\View\View
+     */
     public function edit(Role $role)
     {
         return view('admin.roles.edit', compact('role'));
     }
 
+
+    /**
+     * Update the specified role in storage.
+     *
+     * Determines the appropriate guard name based on the role name,
+     * then updates the role using the RoleService.
+     * Returns a success or error response based on the outcome.
+     *
+     * @param  \App\Http\Requests\Role_Permssion\UpdateRoleRequest  $request
+     * @param  \Spatie\Permission\Models\Role  $role
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateRoleRequest $request, Role $role)
     {
         $guardName = in_array($request->name, ['admin', 'employee']) ? 'web' : 'api';
@@ -65,6 +112,16 @@ class RoleController extends Controller
             : $this->errorResponse('Failed to update role.', 'admin.roles.index');
     }
 
+
+    /**
+     * Remove the specified role from storage.
+     *
+     * Delegates the deletion process to the RoleService.   
+     * Returns a success or error response based on the outcome.
+     *
+     * @param  \Spatie\Permission\Models\Role  $role
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Role $role)
     {
         $success = $this->roleService->destroy($role);
@@ -74,6 +131,16 @@ class RoleController extends Controller
             : $this->errorResponse('Failed to delete role.', 'admin.roles.index');
     }
 
+
+    /**
+     * Show the form for editing the permissions of a specific role.
+     *
+     * Retrieves the role, all available permissions, and the role's current permissions,
+     * then returns the view for editing them.
+     *
+     * @param  int  $roleId
+     * @return \Illuminate\View\View
+     */
     public function editPermissions($roleId)
     {
         $role = $this->roleService->get($roleId);
@@ -83,6 +150,16 @@ class RoleController extends Controller
         return view('admin.roles.edit_permissions', compact('role', 'permissions', 'rolePermissions'));
     }
 
+    /**
+     * Update the permissions assigned to a specific role.
+     *
+     * Retrieves the role by its ID, then updates its permissions using the RoleService.
+     * Returns a success or error response based on the outcome.
+     *
+     * @param  \App\Http\Requests\Role_Permssion\UpdateRolePermissionsRequest  $request
+     * @param  int  $roleId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updatePermissions(UpdateRolePermissionsRequest $request, $roleId)
     {
         $role = $this->roleService->get($roleId);

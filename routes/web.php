@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,14 +42,13 @@ Route::middleware(['auth','role:admin'])
 
         // Permissions
         Route::resource('permissions', PermissionController::class);
-         Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
+        Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
 
 
          //Reports
-         Route::resource('reports', ReportController::class);
+        Route::resource('reports', ReportController::class);
 
-
-       
+        Route::resource('employees', EmployeeController::class);
 });
 
 
