@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\employee\ReservationManagementController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\employee\ReviewManagementController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -20,7 +21,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware(['auth','role:admin'])
+Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')->name('admin.')
     ->group(function () {
 
@@ -41,21 +42,20 @@ Route::middleware(['auth','role:admin'])
 
         // Permissions
         Route::resource('permissions', PermissionController::class);
-         Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
+        Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
 
 
-         //Reports
-         Route::resource('reports', ReportController::class);
+        //Reports
+        Route::resource('reports', ReportController::class);
+    });
 
 
-       
-});
-
-
-Route::middleware(['auth','role:employee'])
+Route::middleware(['auth', 'role:employee'])
     ->prefix('employee')->name('employee.')
     ->group(function () {
         Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
         Route::patch('reservations/{reservation}/status', [ReservationManagementController::class, 'updateStatus'])->name('reservations.updateStatus'); // لاحظ هنا حذف كلمة employee.
-    });
 
+
+          Route::get('/reviews', [ReviewManagementController::class, 'index'])->name('reviews.index');
+    });
