@@ -43,7 +43,7 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-       
+     @can('role.view')   
 <li class="nav-item">
   <a class="nav-link" href="{{ route('admin.roles.index') }}">
     <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -52,8 +52,9 @@
     <span class="nav-link-text ms-1">Roles</span>
   </a>
 </li>
+@endcan
 
-
+@can('permission.view')
 <li class="nav-item">
   <a class="nav-link" href="{{ route('admin.permissions.index') }}">
     <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -62,6 +63,7 @@
     <span class="nav-link-text ms-1">Permissions</span>
   </a>
 </li>
+@endcan
 
 
 
@@ -99,6 +101,7 @@
             <span class="nav-link-text ms-1">Customers</span>
           </a>
         </li>
+        @can('reports.view')
         <li class="nav-item">
           <a class="nav-link  " href="{{ route('admin.reports.index') }}">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -116,6 +119,8 @@
             <span class="nav-link-text ms-1">Reports</span>
           </a>
         </li>
+        @endcan
+         @can('employee.reservation.view')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('employee.reservations.pending') }}">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -132,7 +137,9 @@
             </div>
             <span class="nav-link-text ms-1">Bookings</span>
           </a>
-        <!-- </li>
+          </li>
+          @endcan
+        <!-- 
         <li class="nav-item">
           <a class="nav-link  " href="">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -179,30 +186,36 @@
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
-    <!-- Navbar -->
+ <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
    
-    <a class="navbar-brand" href="{{ route('admin.properties.index') }}">Properties</a>
-   
+    @can('property.view')
+      <a class="navbar-brand" href="{{ route('admin.properties.index') }}">Properties</a>
+    @endcan
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-       
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ route('admin.property_services.index') }}">Additional Services</a>
-        </li>
-       
+        @can('property_service.view')
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('admin.property_services.index') }}">
+              Additional Services
+            </a>
+          </li>
+        @endcan
 
-       
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.property_types.index') }}">Property Types</a>
-        </li>
-        
+        @can('property_type.view')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.property_types.index') }}">
+              Property Types
+            </a>
+          </li>
+        @endcan
 
       </ul>
+   
+
 
       @isset($types,$statuses)
       <form class="d-flex align-items-center" role="search"

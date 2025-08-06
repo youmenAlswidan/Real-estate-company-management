@@ -6,6 +6,8 @@ use App\Http\Resources\Customer\AuthResource;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Traits\Customer\AuthTrait;
+use Spatie\Permission\Models\Role;
+
 
 class AuthService
 {
@@ -21,7 +23,9 @@ class AuthService
                 'password' => bcrypt($data['password']),
             ]);
 
-           $user->assignRole('customer');
+           $role = Role::where('name', 'customer')->where('guard_name', 'api')->first();
+            $user->assignRole($role);
+
 
 
 
