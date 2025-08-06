@@ -29,7 +29,7 @@ Admins and employees use a Blade-based dashboard, while customers access propert
 - ✅ Property management with types (Apartment, Villa, Land, Shop)
 - ✅ Optional extra services per property
 - ✅ Visit booking, customer reviews, and booking history
-- ✅ Email notifications for visit confirmations
+- ✅ Email notifications for visit 
 
 ---
 
@@ -93,11 +93,11 @@ Admins and employees use a Blade-based dashboard, while customers access propert
 
 ## ⚙️ Non-Functional Requirements
 
-- User-friendly and intuitive admin interface
-- Data security (authentication, permissions, password hashing)
+- User-friendly and intuitive admin interface(usability)
+- Data security (authentication, permissions, password hashing)(scurity)
 - Good performance and fast response time
 - Email notifications (via Laravel Mail)
-- Clean code using Laravel MVC architecture
+- Clean code using Laravel MVC architecture(maintinability)
 - Secure image uploads (stored in `storage/app/public`)
 
 ---
