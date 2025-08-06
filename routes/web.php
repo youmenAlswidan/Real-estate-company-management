@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\employee\ReservationManagementController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\CustomerController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -49,6 +50,8 @@ Route::middleware(['auth','role:admin'])
         Route::resource('reports', ReportController::class);
 
         Route::resource('employees', EmployeeController::class);
+       Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
+
 });
 
 
