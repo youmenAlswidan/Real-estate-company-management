@@ -66,9 +66,9 @@
 @endcan
 
 
-
+ @can('employees.view')
         <li class="nav-item">
-          <a class="nav-link  " href="">
+         <a class="nav-link" href="{{ route('admin.employees.index') }}">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
               <svg width="30px" height="30px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g id="table" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -84,8 +84,11 @@
             <span class="nav-link-text ms-1">Employees</span>
           </a>
         </li>
+        @endcan
+        @can('customer.view')
         <li class="nav-item">
-          <a class="nav-link  " href="">
+       
+         <a class="nav-link" href="{{ route('admin.customers.index') }}">
             <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
               <svg width="30px" height="30px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g id="table" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -101,6 +104,7 @@
             <span class="nav-link-text ms-1">Customers</span>
           </a>
         </li>
+        @endcan
         @can('reports.view')
         <li class="nav-item">
           <a class="nav-link  " href="{{ route('admin.reports.index') }}">
