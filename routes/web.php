@@ -42,19 +42,13 @@ Route::middleware(['auth','role:admin'])
 
         // Permissions
         Route::resource('permissions', PermissionController::class);
-<<<<<<< HEAD
-         Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
+        Route::get('reservations/pending', [ReservationManagementController::class, 'index'])->name('reservations.pending');
 
 
          //Reports
-         Route::resource('reports', ReportController::class);
-
-
-       
-=======
+        Route::resource('reports', ReportController::class);
 
         Route::resource('employees', EmployeeController::class);
->>>>>>> ali_last
 });
 
 
