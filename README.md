@@ -30,7 +30,7 @@ Admins and employees use a Blade-based dashboard, while customers access propert
 - ✅ Optional extra services per property
 - ✅ Visit booking, customer reviews, and booking history
 - ✅ Email notifications for visit 
-
+- ✅ Email notifications for visit 
 ---
 
 ## 👥 User Roles
